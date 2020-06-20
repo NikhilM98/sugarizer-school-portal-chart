@@ -1,0 +1,7 @@
+sspNamespace: schoolportal
+hostName: sugarizer.tools
+host: sugarizer.tools
+databaseUrl: mymongodb
+replicaset: true
+gcpProjectId: gcpProjectId
+clouddns: yourCloudDnsKeyInBase64

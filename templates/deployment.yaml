@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ssp-deployment-{{required "sspNamespace not defined" .Values.sspNamespace}}
+  namespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: http
+      sspNamespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
+  template:
+    metadata:
+      labels:
+        app: http
+        sspNamespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
+    spec:
+      serviceAccountName: ssp-service-account-{{required "sspNamespace not defined" .Values.sspNamespace}}
+      containers:
+      - name: ssp-http
+        image: nikhilm98/sugarizer-school-portal
+        volumeMounts:
+        - name: env
+          mountPath: "/usr/src/sugarizer-school-portal-server/env"
+          readOnly: true
+        - name: values
+          mountPath: "/usr/src/sugarizer-chart/gke-enviornment/sugarizer-chart/values.yaml"
+          subPath: values.yaml
+          readOnly: true
+      volumes:
+      - name: env
+        secret:
+          secretName: ssp-config
+      - name: values
+        secret:
+          secretName: sugarizer-chart-values

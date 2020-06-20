@@ -1,0 +1,5 @@
+schoolShortName: test-school
+hostName: test.sugarizer.tools
+databaseUrl: {{.Values.databaseUrl}}
+replicaset: {{.Values.replicaset}}
+sspNamespace: {{.Values.sspNamespace}}
