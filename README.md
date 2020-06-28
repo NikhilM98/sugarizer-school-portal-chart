@@ -21,6 +21,18 @@ helm repo update
 helm install mymongodb stable/mongodb-replicaset
 ```
 
+### Install Kubernetes-Reflector
+[Reflector](https://github.com/emberstack/kubernetes-reflector) is a Kubernetes addon designed to monitor changes to resources (secrets and configmaps) and reflect changes to mirror resources in the same or other namespaces. Reflector includes a cert-manager extension used to automatically annotate created secrets and allow reflection.    
+You can install Reflector using its Helm Chart. It can be installed by following these commands:
+```bash
+# Add Chart Repository
+helm repo add emberstack https://emberstack.github.io/helm-charts
+helm repo update
+
+# Install the chart with the release name reflector (You can change the release name)
+helm upgrade --install reflector emberstack/reflector
+```
+
 ## Chart Installation
 If you have Kubernetes set-up, then Sugarizer School Portal Chart can be installed by following these steps:
 
