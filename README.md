@@ -124,6 +124,19 @@ gcloud:
   keyFilePath: /secret/service-acc-secret/key.json
 ```
 
+### Restoring data from backup
+In order to restore data to the Sugarizer School Portal database, you need to open a shell in MGOB pod. The backups are available in `/storage/sugarizer-database/` directory inside the pod (where `sugarizer-database` was the name of our backup plan).
+
+- In case of a database error in which you need to completely restore all the databases, you can run:
+```bash
+mongorestore --gzip --archive=/storage/sugarizer-database/sugarizer-database-xxxxxxxxxx.gz --host mymongodb-mongodb-replicaset-0.mymongodb-mongodb-replicaset.default:27017 --drop
+```
+- In case a school's DB is messed up and you need to restore that, you can run:
+```bash
+mongorestore --gzip --archive=/storage/sugarizer-database/sugarizer-database-xxxxxxxxxx.gz --nsInclude="db_name.*" --host mymongodb-mongodb-replicaset-0.mymongodb-mongodb-replicaset.default:27017 --drop
+```
+Where db_name is the name of the database to restore.
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
