@@ -33,6 +33,48 @@ helm repo update
 helm upgrade --install reflector emberstack/reflector
 ```
 
+### Install NGINX Ingress Controller
+The [NGINX Ingress Controller](https://github.com/nginxinc/kubernetes-ingress/) provides an implementation of an Ingress controller for NGINX and NGINX Plus.
+
+The Ingress is a Kubernetes resource that lets you configure an HTTP load balancer for applications running on Kubernetes, represented by one or more Services. Such a load balancer is necessary to deliver those applications to clients outside of the Kubernetes cluster.
+
+Clone the chart repository:
+```bash
+git clone https://github.com/nginxinc/kubernetes-ingress/
+cd deployments/helm-chart/
+```
+Open the `values.yaml` file and add these `customPorts` under `controller.service.customPorts`:
+```bash
+customPorts:
+  - port: 8039
+    targetPort: https
+    protocol: TCP
+    name: presence
+```
+Install the chart with the release name nginx-ingress (You can change the release name)
+```bash
+helm install nginx-ingress .
+```
+
+### Install Cert-Manager
+[Cert-Manager](https://cert-manager.io/docs/) is a native Kubernetes certificate management controller. It can help with issuing certificates from a variety of sources, such as Let’s Encrypt, HashiCorp Vault, Venafi, a simple signing key pair, or self-signed.
+
+We use Cert-Manager to issue HTTPS certificates to the Sugarizer School Portal Server and its Sugarizer-Server deployments.
+
+You can refer to Cert-Manager [installation documentation](https://cert-manager.io/docs/installation/kubernetes/) or simply follow these commands to install Cert-Manager on the cluster:
+```bash
+# Create the namespace for cert-manager
+kubectl create namespace cert-manager
+
+# Add the Jetstack Helm repository
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+
+# Cert-Manager requires a number of CRD resources to be installed into your cluster as part of installation.
+# Install CRDs as part of the Helm release
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.15.1 --set installCRDs=true
+```
+
 ### Create Service Account
 You need to create a GCP service account key from the API & Services page. Save the service account key. It will be required in the values.yaml file while chart installation. It'll also be required if you set-up backup and restore using MGOB and intend to use gcloud bucket.
 
@@ -76,7 +118,6 @@ To setup MGOB to automate MongoDB backups on Google Kubernetes Engine, follow th
 Requirements:
 - GKE cluster minimum version v1.8
 - kubctl admin config
-
 
 ### Store Service Account key as a secret
 First, you need to create a GCP service account key from the API & Services page. In case you already have one, then download the JSON file and rename it to `key.json`.
