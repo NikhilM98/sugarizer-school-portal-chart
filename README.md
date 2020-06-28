@@ -33,6 +33,9 @@ helm repo update
 helm upgrade --install reflector emberstack/reflector
 ```
 
+### Create Service Account
+You need to create a GCP service account key from the API & Services page. Save the service account key. It will be required in the values.yaml file while chart installation. It'll also be required if you set-up backup and restore using MGOB and intend to use gcloud bucket.
+
 ## Chart Installation
 If you have Kubernetes set-up, then Sugarizer School Portal Chart can be installed by following these steps:
 
@@ -64,6 +67,62 @@ Navigate into the chart directory and run:
 helm install <chart-name> .
 ```
 Where `<chart-name>` is the name you want to give to this chart.
+
+## Backup and Restore data using MGOB
+[MGOB](https://github.com/stefanprodan/mgob/) is a MongoDB backup automation tool built with Go. It features like scheduled backups, local backups retention, upload to S3 Object Storage (Minio, AWS, Google Cloud, Azure) and upload to gcloud storage.
+
+To setup MGOB to automate MongoDB backups on Google Kubernetes Engine, follow these step by step instructions:
+
+Requirements:
+- GKE cluster minimum version v1.8
+- kubctl admin config
+
+
+### Store Service Account key as a secret
+First, you need to create a GCP service account key from the API & Services page. In case you already have one, then download the JSON file and rename it to `key.json`.
+
+Store the JSON file as a secret:
+```bash
+kubectl create secret generic service-acc-secret --from-file=key.json
+```
+
+### MGOB Installation
+Clone the MGOB repository:
+```bash
+git clone https://github.com/stefanprodan/mgob.git
+cd mgob/chart
+```
+Edit the chart's `values.yaml` file.
+- Set the appropriate `storageClass` for your provider.
+- Update the `mgob-config` `configMap`. Add `sugarizer-database` backup plan.
+Here is an example backup plan:
+```bash
+sugarizer-database.yml: |
+  target:
+    host: "mymongodb-mongodb-replicaset-0.mymongodb-mongodb-replicaset.default,mymongodb-mongodb-replicaset-1.mymongodb-mongodb-replicaset.default,mymongodb-mongodb-replicaset-2.mymongodb-mongodb-replicaset.default"
+    port: 27017
+    database: ""
+  scheduler:
+    cron: "0 0,6,12,18 */1 * *"
+    retention: 14
+    timeout: 60
+```
+- Add a reference to the secret. You can either insert your secret values as part of helm values or refer externally created secrets. In our case, we created a secret with a name `service-acc-secret`.
+```bash
+secret:
+  - name: service-acc-secret
+```
+An example YAML configuration is available as [mgob-gke.yaml](examples/mgob-gke.yaml).
+
+### Backup to GCP Storage Bucket (Optional)
+For long term backup storage, you could use a GCP Bucket since is a cheaper option than keeping all backups on disk.    
+You need to enable `storage.objects` acccess to the service account in order to allow objects creation in the bucket.    
+From the GCP web UI, navigate to Storage and create a regional bucket named `ssp-backup` (Or any other name if it's taken). Set the bucket and secret name in the backup-plan in the `values.yaml` file.
+```bash
+gcloud:
+  bucket: "ssp-backup"
+  keyFilePath: /secret/service-acc-secret/key.json
+```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
