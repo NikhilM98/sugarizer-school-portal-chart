@@ -15,6 +15,6 @@ helm status ingress-nginx >/dev/null 2>&1 || {
     printf >&2 "${BLUE}Chart not found. Installing NGINX Ingress Controller...\n${NC}";
     helm repo add nginx-stable https://helm.nginx.com/stable;
     helm repo update;
-    helm install ingress-nginx nginx-stable/nginx-ingress -f nginxinc-values.yaml
+    helm install ingress-nginx nginx-stable/nginx-ingress -f charts/nginxinc-values.yaml
 }
 printf "${GREEN}Finished checking for NGINX Ingress Controller\n${NC}";
