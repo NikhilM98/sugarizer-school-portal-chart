@@ -34,7 +34,7 @@ command -v gcloud >/dev/null 2>&1 || {
     exit 1;
 }
 command -v kubectl >/dev/null 2>&1 || {
-    printf >&2 "${BLUE}Installing kubectl using gcloud components...\n${NC}";
+    printf >&2 "${BLUE}Installing kubectl...\n${NC}";
     apt update && apt-get install kubectl;
 }
 command -v helm >/dev/null 2>&1 || {
