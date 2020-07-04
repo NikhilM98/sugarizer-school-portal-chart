@@ -24,7 +24,7 @@ spec:
           mountPath: "/usr/src/sugarizer-school-portal-server/env"
           readOnly: true
         - name: values
-          mountPath: "/usr/src/sugarizer-chart/gke-enviornment/sugarizer-chart/values.yaml"
+          mountPath: "/usr/src/sugarizer-chart/gke-environment/sugarizer-chart/values.yaml"
           subPath: values.yaml
           readOnly: true
       volumes:
