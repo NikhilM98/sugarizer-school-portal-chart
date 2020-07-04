@@ -21,7 +21,8 @@ spec:
         image: nikhilm98/sugarizer-school-portal
         volumeMounts:
         - name: env
-          mountPath: "/usr/src/sugarizer-school-portal-server/env"
+          mountPath: "/usr/src/sugarizer-school-portal-server/env/config.ini"
+          subPath: config.ini
           readOnly: true
         - name: values
           mountPath: "/usr/src/sugarizer-chart/gke-environment/sugarizer-chart/values.yaml"
