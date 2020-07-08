@@ -17,4 +17,4 @@ helm status ingress-nginx >/dev/null 2>&1 || {
     helm repo update;
     helm install ingress-nginx nginx-stable/nginx-ingress -f charts/nginxinc-values.yaml
 }
-printf "${GREEN}Finished checking for NGINX Ingress Controller\n${NC}";
+printf "${GREEN}Finished checking for NGINX Ingress Controller\n\n${NC}";

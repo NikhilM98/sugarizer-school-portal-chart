@@ -18,4 +18,4 @@ helm status cert-manager --namespace=cert-manager >/dev/null 2>&1 || {
     helm repo update;
     helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.15.1 --set installCRDs=true;
 }
-printf "${GREEN}Finished checking for Cert-Manager\n${NC}";
+printf "${GREEN}Finished checking for Cert-Manager\n\n${NC}";

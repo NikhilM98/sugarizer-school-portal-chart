@@ -17,4 +17,4 @@ helm status mymongodb >/dev/null 2>&1 || {
     helm repo update;
     helm install mymongodb stable/mongodb-replicaset;
 }
-printf "${GREEN}Finished checking for MongoDB-Replicaset\n${NC}";
+printf "${GREEN}Finished checking for MongoDB-Replicaset\n\n${NC}";

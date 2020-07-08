@@ -17,4 +17,4 @@ helm status reflector >/dev/null 2>&1 || {
     helm repo update;
     helm install reflector emberstack/reflector;
 }
-printf "${GREEN}Finished checking for Kubernetes-Reflector\n${NC}";
+printf "${GREEN}Finished checking for Kubernetes-Reflector\n\n${NC}";

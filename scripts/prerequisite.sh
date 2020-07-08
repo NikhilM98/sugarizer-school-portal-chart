@@ -58,4 +58,4 @@ kubectl get pods >/dev/null 2>&1 || {
 }
 
 # Print Exit Message
-printf "${GREEN}Finished checking for dependencies\n${NC}"
+printf "${GREEN}Finished checking for dependencies\n\n${NC}"
