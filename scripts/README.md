@@ -1,6 +1,6 @@
-# Sugarizer School Portal Environment Setup
+# Sugarizer School Portal Setup
 
-Setup Script for Sugarizer School Portal Environment.    
+A complete Setup Script for Sugarizer School Portal dependencies, environment, and the helm chart.    
 
 ## Instructions
 
@@ -14,16 +14,19 @@ cd scripts
 sh setup.sh
 ```
 
-After setting up the environment, point the Address (`A`) Record of your Cloud DNS zone to the Cluster IP of the NGINX Ingress Controller.
+After setting up the environment, the setup will pause.
+Navigate to the repository root, update the chart `values.yaml` file.
+Put the `gcpProjectId` and `clouddns` value in the `values.yaml` file.
 
-After that, to install Sugarizer School Portal chart, navigate to the repository root, edit the chart `values.yaml` and run `helm install`.
+**gcpProjectId:** The Project ID of the project on Google Cloud Platform.
 
-```bash
-# Navigate into the Sugarizer School Portal chart directory and run:
-helm install <chart-name> .
-```
-Where `<chart-name>` is the name you want to give to this chart.
+**clouddns:** Your service account key in base64 format.
 
+Press `Enter` to proceed once you have edited the chart values.
+
+The Sugarizer School Portal Chart will be installed with the release name `ssp`.
+
+Note: Point the Address (`A`) Record of your Cloud DNS zone to the Cluster IP of the NGINX Ingress Controller.
 
 ## Usage
 
@@ -40,3 +43,5 @@ It then checks and installs the required Helm charts:
 - [Kubernetes-Reflector](https://github.com/emberstack/kubernetes-reflector) as `reflector` in `default` namespace.
 - [NGINX Ingress Controller](https://github.com/nginxinc/kubernetes-ingress/) as `ingress-nginx` in `default` namespace.
 - [Cert-Manager](https://cert-manager.io/docs/) as `cert-manager` in `cert-manager` namespace.
+
+It then checks and installs [Sugarizer School Portal Helm Chart](https://github.com/NikhilM98/sugarizer-school-portal-chart) if everything is fine.

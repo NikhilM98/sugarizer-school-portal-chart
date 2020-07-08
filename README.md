@@ -106,9 +106,9 @@ Open [values.yaml](values.yaml) and edit the default values.
 ### Install Chart Using Helm
 Navigate into the chart directory and run:
 ```bash
-helm install <chart-name> .
+helm install ssp .
 ```
-Where `<chart-name>` is the name you want to give to this chart.
+Where `ssp` can be the name you want to give to this chart.
 
 ## Backup and Restore data using MGOB
 [MGOB](https://github.com/stefanprodan/mgob/) is a MongoDB backup automation tool built with Go. It features like scheduled backups, local backups retention, upload to S3 Object Storage (Minio, AWS, Google Cloud, Azure) and upload to gcloud storage.
