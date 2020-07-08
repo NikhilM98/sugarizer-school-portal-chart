@@ -11,7 +11,7 @@ BLUE='\033[0;34m';
 NC='\033[0m';
 
 # Print Intro Message
-printf "${GREEN}Sugarizer School Portal Setup${NC}\n"
+printf "\n${GREEN}Sugarizer School Portal Setup${NC}\n\n"
 
 # Check for dependencies
 sh prerequisite.sh
@@ -28,4 +28,11 @@ sh charts/nginxinc.sh
 # Check for Cert-Manager
 sh charts/certmanager.sh
 
+printf "${GREEN}Finished setting up the Sugarizer School Portal Environment${NC}\n"
+
+# Check for Sugarizer School Portal
+sh charts/ssp.sh
+
 printf "${GREEN}Finished setting up the Kubernetes cluster${NC}\n"
+
+printf "\n${YELLOW}Note: Point the Address ${BLUE}('A')${YELLOW} Record of your Cloud DNS zone to the Cluster IP of the NGINX Ingress Controller.${NC}\n\n"
