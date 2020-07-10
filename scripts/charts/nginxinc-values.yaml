@@ -1,8 +1,0 @@
-controller:
-  service:
-    ## A list of custom ports to expose through the Ingress controller service. Follows the conventional Kubernetes yaml syntax for service ports.
-    customPorts:
-      - port: 8039
-        targetPort: https
-        protocol: TCP
-        name: presence
