@@ -1,12 +1,17 @@
 # Sugarizer School Portal Chart
 [Helm](https://helm.sh/) Chart for setting up [Sugarizer School Portal Server](https://github.com/nikhilm98/sugarizer-school-portal-server) deployment on a [Kubernetes](https://kubernetes.io/) cluster.
 
-**Sugarizer School Portal** is a Kubernetes cluster that is able to create/manage on-demand new Sugarizer Server instances.
+[Sugarizer School Portal](https://github.com/nikhilm98/sugarizer-school-portal) is a Kubernetes cluster that is able to create/manage on-demand new Sugarizer Server instances.
 
 ## Usage
 You can deploy **Sugarizer School Portal Server** instance by editing the values of the Values YAML file and running simple `helm install` command. The Sugarizer School Portal Server instance can be accessed by the browser by opening the hostName URL.
 
-## Environment Setup
+## Setup Script (Automatic Setup)
+You can use Sugarizer School Portal setup script to install dependencies, set-up the cluster environment and install the Sugarizer School Portal Chart on your GKE Cluster. You can find the script [here](https://github.com/NikhilM98/sugarizer-school-portal/tree/master/scripts).
+
+Simply navigate into the scripts directory and run `sh setup.sh` to set up your cluster. You can read more about the setup process in the [documentation](https://github.com/NikhilM98/sugarizer-school-portal/blob/master/scripts/README.md).
+
+## Environment Setup (Manual Setup)
 If you don't have a [GKE](https://cloud.google.com/kubernetes-engine) cluster set-up, you can follow these steps to set-up a working environment.
 
 ### Install MongoDB-Replicaset
@@ -78,7 +83,7 @@ helm install cert-manager jetstack/cert-manager --namespace cert-manager --versi
 ### Create Service Account
 You need to create a GCP service account key from the API & Services page. Save the service account key. It will be required in the values.yaml file while chart installation. It'll also be required if you set-up backup and restore using MGOB and intend to use gcloud bucket.
 
-## Chart Installation
+## Chart Installation (Manual Setup)
 If you have Kubernetes set-up, then Sugarizer School Portal Chart can be installed by following these steps:
 
 ### Clone Sugarizer School Portal Chart
