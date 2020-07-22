@@ -5,3 +5,4 @@ databaseUrl: mymongodb
 replicaset: true
 gcpProjectId: gcpProjectId
 clouddns: yourCloudDnsKeyInBase64
+slackWebhookUrl: false

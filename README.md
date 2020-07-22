@@ -108,6 +108,8 @@ Open [values.yaml](values.yaml) and edit the default values.
 
 **clouddns:** Your service account key in base64 format.
 
+**slackWebhookUrl:** (Optional) The [slackWebhookUrl](https://api.slack.com/messaging/webhooks) of your slack channel to connect the server with the webhook. You can follow [these](https://api.slack.com/messaging/webhooks#getting_started) instructions to create a webhook. Set `slackWebhookUrl` to `false` if you do not want your app to connect with Slack. If the app is connected with slack, it'll send notifications to the channel if a deployment is created or destroyed.
+
 ### Install Chart Using Helm
 Navigate into the chart directory and run:
 ```bash
