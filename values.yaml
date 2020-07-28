@@ -2,6 +2,7 @@ deployment:
     sspNamespace: schoolportal
     hostName: azure.sugarizer.tools
     host: azure.sugarizer.tools
+    https: true
 database:
     databaseUrl: mymongodb
     replicaset: true

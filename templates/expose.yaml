@@ -1,3 +1,4 @@
+{{- if eq .Values.deployment.https true}}
 apiVersion: v1
 kind: Secret
 metadata:
@@ -13,6 +14,7 @@ data:
 
 ---
 
+{{- end }}
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -38,8 +40,10 @@ metadata:
   name: ssp-vs-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
   namespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
 spec:
+  {{- if eq .Values.deployment.https true}}
   tls:
     secret: https-mirror-secret-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+  {{- end }}
   host: {{required "hostName not defined" .Values.deployment.hostName}}
   upstreams:
   - name: web
