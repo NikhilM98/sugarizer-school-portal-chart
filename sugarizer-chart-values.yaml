@@ -1,5 +1,6 @@
-schoolShortName: test-school
-hostName: test.sugarizer.tools
-databaseUrl: {{.Values.database.databaseUrl}}
-replicaset: {{.Values.database.replicaset}}
-sspNamespace: {{.Values.deployment.sspNamespace}}
+deployment:
+    sspNamespace: {{.Values.deployment.sspNamespace}}
+    https: {{.Values.deployment.https}}
+database:
+    databaseUrl: {{.Values.database.databaseUrl}}
+    replicaset: {{.Values.database.replicaset}}

@@ -6,8 +6,8 @@ deployment:
 database:
     databaseUrl: mymongodb
     replicaset: true
-cluster:
-    provider: azure
+cluster: # Not required if HTTPS is false.
+    provider: azure # Options: GKE, Azure
     # If provider is GKE
     gcpProjectId: null
     gcpServiceAccount: null
