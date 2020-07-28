@@ -1,5 +1,5 @@
 deployment:
-    sspNamespace: {{.Values.deployment.sspNamespace}}
+    sspNamespace: {{.Values.sspNamespace}}
     https: {{.Values.deployment.https}}
 database:
     databaseUrl: {{.Values.database.databaseUrl}}

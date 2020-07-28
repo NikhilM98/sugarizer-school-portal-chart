@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: https-mirror-secret-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
-  namespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+  name: https-mirror-secret-{{required "sspNamespace not defined" .Values.sspNamespace}}
+  namespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
   annotations:
-    reflector.v1.k8s.emberstack.com/reflects: '{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}/https-secret-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}'
+    reflector.v1.k8s.emberstack.com/reflects: '{{required "sspNamespace not defined" .Values.sspNamespace}}/https-secret-{{required "sspNamespace not defined" .Values.sspNamespace}}'
 type: kubernetes.io/tls
 data:
   ca.crt: ""
@@ -18,36 +18,36 @@ data:
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: ssp-service-db-np-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+  name: ssp-service-db-np-{{required "sspNamespace not defined" .Values.sspNamespace}}
 spec:
   policyTypes:
   - Ingress
   - Egress
   podSelector:
     matchLabels:
-      sspNamespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+      sspNamespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          sspNamespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+          sspNamespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
 
 ---
 
 apiVersion: k8s.nginx.org/v1
 kind: VirtualServer
 metadata:
-  name: ssp-vs-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
-  namespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+  name: ssp-vs-{{required "sspNamespace not defined" .Values.sspNamespace}}
+  namespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
 spec:
   {{- if eq .Values.deployment.https true}}
   tls:
-    secret: https-mirror-secret-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+    secret: https-mirror-secret-{{required "sspNamespace not defined" .Values.sspNamespace}}
   {{- end }}
-  host: {{required "hostName not defined" .Values.deployment.hostName}}
+  host: {{required "hostName not defined" .Values.hostName}}
   upstreams:
   - name: web
-    service: ssp-service-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+    service: ssp-service-{{required "sspNamespace not defined" .Values.sspNamespace}}
     port: 80
   routes:
   - path: /

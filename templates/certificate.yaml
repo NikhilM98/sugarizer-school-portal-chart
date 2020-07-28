@@ -8,8 +8,8 @@ data:
   key.json: {{required "azureClientSecret not defined" .Values.cluster.azureClientSecret | b64enc}}
   {{- end }}
 metadata:
-  name: serviceAccount-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
-  namespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+  name: clouddns-{{required "sspNamespace not defined" .Values.sspNamespace}}
+  namespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
 type: Opaque
 
 ---
@@ -17,28 +17,28 @@ type: Opaque
 apiVersion: cert-manager.io/v1alpha2
 kind: Issuer
 metadata:
-  name: ssp-letsencrypt-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
-  namespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+  name: ssp-letsencrypt-{{required "sspNamespace not defined" .Values.sspNamespace}}
+  namespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
 spec:
   acme:
     # server: https://acme-v02.api.letsencrypt.org/directory
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: ssp-acme-pk-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+      name: ssp-acme-pk-{{required "sspNamespace not defined" .Values.sspNamespace}}
     solvers:
     {{- if eq .Values.cluster.provider "gke" }}
     - dns01:
-        serviceAccount:
+        clouddns:
           project: {{required "gcpProjectId not defined" .Values.cluster.gcpProjectId}}
           serviceAccountSecretRef:
-            name: serviceAccount-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+            name: clouddns-{{required "sspNamespace not defined" .Values.sspNamespace}}
             key: key.json
     {{- else if eq .Values.cluster.provider "azure" }}
     - dns01:
         azuredns:
           clientID: {{required "azureSPAppId not defined" .Values.cluster.azureSPAppId}}
           clientSecretSecretRef:
-            name: serviceAccount-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+            name: clouddns-{{required "sspNamespace not defined" .Values.sspNamespace}}
             key: key.json
           subscriptionID: {{required "azureSubscriptionId not defined" .Values.cluster.azureSubscriptionId}}
           tenantID: {{required "azureTenantId not defined" .Values.cluster.azureTenantId}}
@@ -52,15 +52,15 @@ spec:
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
-  name: ssp-cert-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
-  namespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+  name: ssp-cert-{{required "sspNamespace not defined" .Values.sspNamespace}}
+  namespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
   annotations:
     reflector.v1.k8s.emberstack.com/secret-reflection-allowed: "true"
 spec:
   dnsNames: 
-    - '*.{{required "hostName not defined" .Values.deployment.hostName}}'
-    - {{required "hostName not defined" .Values.deployment.hostName}}
-  secretName: https-secret-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+    - '*.{{required "hostName not defined" .Values.hostName}}'
+    - {{required "hostName not defined" .Values.hostName}}
+  secretName: https-secret-{{required "sspNamespace not defined" .Values.sspNamespace}}
   issuerRef:
-    name: ssp-letsencrypt-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+    name: ssp-letsencrypt-{{required "sspNamespace not defined" .Values.sspNamespace}}
 {{- end }}
