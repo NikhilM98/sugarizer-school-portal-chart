@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ssp-deployment-{{required "sspNamespace not defined" .Values.sspNamespace}}
-  namespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
+  name: ssp-deployment-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+  namespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: http
-      sspNamespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
+      sspNamespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
   template:
     metadata:
       labels:
         app: http
-        sspNamespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
+        sspNamespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
     spec:
-      serviceAccountName: ssp-service-account-{{required "sspNamespace not defined" .Values.sspNamespace}}
+      serviceAccountName: ssp-service-account-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
       containers:
       - name: ssp-http
         image: nikhilm98/sugarizer-school-portal

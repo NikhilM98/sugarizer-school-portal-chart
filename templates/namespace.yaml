@@ -1,6 +1,6 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{required "sspNamespace not defined" .Values.sspNamespace}}
+  name: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
   labels:
     name: development

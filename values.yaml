@@ -1,15 +1,21 @@
-sspNamespace: schoolportal
-hostName: azure.sugarizer.tools
-host: azure.sugarizer.tools
-databaseUrl: mymongodb
-replicaset: true
-gcpProjectId: null
-clouddns: null
-slackWebhookUrl: null
-provider: azure
-azureClientSecret: null
-azureSPAppId: null
-azureSubscriptionId: null
-azureTenantId: null
-azureDnsZoneResourceGroup: null
-azureDnsZone: azure.sugarizer.tools
+deployment:
+    sspNamespace: schoolportal
+    hostName: azure.sugarizer.tools
+    host: azure.sugarizer.tools
+database:
+    databaseUrl: mymongodb
+    replicaset: true
+cluster:
+    provider: azure
+    # If provider is GKE
+    gcpProjectId: null
+    gcpServiceAccount: null
+    # If provider is Azure
+    azureClientSecret: null
+    azureSPAppId: null
+    azureSubscriptionId: null
+    azureTenantId: null
+    azureDnsZoneResourceGroup: null
+    azureDnsZone: azure.sugarizer.tools
+webhook:
+    slackWebhookUrl: null

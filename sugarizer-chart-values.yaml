@@ -1,12 +1,5 @@
 schoolShortName: test-school
 hostName: test.sugarizer.tools
-databaseUrl: {{.Values.databaseUrl}}
-replicaset: {{.Values.replicaset}}
-sspNamespace: {{.Values.sspNamespace}}
-provider: {{.Values.provider}}
-azureClientSecret: {{.Values.azureClientSecret}}
-azureSPAppId: {{.Values.azureSPAppId}}
-azureSubscriptionId: {{.Values.azureSubscriptionId}}
-azureTenantId: {{.Values.azureTenantId}}
-azureDnsZoneResourceGroup: {{.Values.azureDnsZoneResourceGroup}}
-azureDnsZone: {{.Values.azureDnsZone}}
+databaseUrl: {{.Values.database.databaseUrl}}
+replicaset: {{.Values.database.replicaset}}
+sspNamespace: {{.Values.deployment.sspNamespace}}

@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ssp-service-{{required "sspNamespace not defined" .Values.sspNamespace}}
-  namespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
+  name: ssp-service-{{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
+  namespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
 spec:
   selector:
-    sspNamespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
+    sspNamespace: {{required "sspNamespace not defined" .Values.deployment.sspNamespace}}
     app: http
   ports:
     - name: web
