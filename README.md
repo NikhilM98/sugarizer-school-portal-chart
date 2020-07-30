@@ -6,6 +6,16 @@
 ## Usage
 You can deploy **Sugarizer School Portal Server** instance by editing the values of the Values YAML file and running simple `helm install` command. The Sugarizer School Portal Server instance can be accessed by the browser by opening the hostName URL.
 
+## Provider Support
+Sugarizer School Portal Chart supports two providers:
+- [Azure Kubernetes Service](https://azure.microsoft.com/en-in/services/kubernetes-service/) (AKS)
+- [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine) (GKE)
+
+
+**Note:**
+- If you do not want to use HTTPS with Sugarizer School Portal, set `https` to `false` in `values.yaml`. The TLS Certificate will not be generated. You don't need to configure `cluster` in the `values.yaml` file in this case.
+- If you want HTTPS then you need to set up Cloud DNS on your cloud provider and enter its  configuration in the `values.yaml` file.
+
 ## Setup Script (Automatic Setup)
 You can use Sugarizer School Portal setup script to install dependencies, set-up the cluster environment and install the Sugarizer School Portal Chart on your GKE Cluster. You can find the script [here](https://github.com/NikhilM98/sugarizer-school-portal/tree/master/scripts).
 
@@ -27,6 +37,8 @@ helm install mymongodb stable/mongodb-replicaset
 ```
 
 ### Install Kubernetes-Reflector
+**Note:** Not required if you do not want HTTPS support.
+
 [Reflector](https://github.com/emberstack/kubernetes-reflector) is a Kubernetes addon designed to monitor changes to resources (secrets and configmaps) and reflect changes to mirror resources in the same or other namespaces. Reflector includes a cert-manager extension used to automatically annotate created secrets and allow reflection.    
 You can install Reflector using its Helm Chart. It can be installed by following these commands:
 ```bash
@@ -50,18 +62,36 @@ cd deployments/helm-chart/
 ```
 Open the `values.yaml` file and add these `customPorts` under `controller.service.customPorts`:
 ```bash
+# For HTTP only support (AKS/GKE/Microk8s)
+customPorts:
+  - port: 8039
+    targetPort: http
+    protocol: TCP
+    name: presence
+```
+Or
+```bash
+# If you want to have HTTPS support (AKS/GKE + Cloud DNS)
 customPorts:
   - port: 8039
     targetPort: https
     protocol: TCP
     name: presence
 ```
+
 Install the chart with the release name nginx-ingress (You can change the release name)
 ```bash
 helm install nginx-ingress .
 ```
+After installing the controller, point the hosts (domain name) to the External IP of the NGINX Ingress Controller. You can find the External IP by running:
+```bash
+kubectl get service --all-namespaces
+```
+Point the `A` record of domain to the External IP of the controller.
 
 ### Install Cert-Manager
+**Note:** Required if you want HTTPS support. You also need to set up Cloud DNS on your cloud provider and enter its configuration in the `values.yaml` file. Not required if you do not want HTTPS support.
+
 [Cert-Manager](https://cert-manager.io/docs/) is a native Kubernetes certificate management controller. It can help with issuing certificates from a variety of sources, such as Let’s Encrypt, HashiCorp Vault, Venafi, a simple signing key pair, or self-signed.
 
 We use Cert-Manager to issue HTTPS certificates to the Sugarizer School Portal Server and its Sugarizer-Server deployments.
@@ -81,7 +111,15 @@ helm install cert-manager jetstack/cert-manager --namespace cert-manager --versi
 ```
 
 ### Create Service Account
-You need to create a GCP service account key from the API & Services page. Save the service account key. It will be required in the values.yaml file while chart installation. It'll also be required if you set-up backup and restore using MGOB and intend to use gcloud bucket.
+**Note:** Required only if you want HTTPS support.
+
+**Instructions:**
+- **AKS:**
+You need to create a Service Principal for Azure. You can follow these [instructions](https://cert-manager.io/docs/configuration/acme/dns01/azuredns/) to create a Service Principal for Azure.
+
+- **GKE:**
+You can create a Service Account for GCP by following these [instructions](https://cert-manager.io/docs/configuration/acme/dns01/google/).
+Save the service account key. It will be required in the values.yaml file while chart installation. It'll also be required if you set-up backup and restore using MGOB and intend to use gcloud bucket.
 
 ## Chart Installation (Manual Setup)
 If you have Kubernetes set-up, then Sugarizer School Portal Chart can be installed by following these steps:
@@ -90,25 +128,42 @@ If you have Kubernetes set-up, then Sugarizer School Portal Chart can be install
 ```bash
 git clone https://github.com/NikhilM98/sugarizer-school-portal-chart
 ```
-
 ### Edit Default Values
 Open [values.yaml](values.yaml) and edit the default values.
 
-**sspNamespace:** Kubernetes [Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) for the chart. It is the namespace on which Sugarizer School Portal Server will be installed.
+**[sspNamespace] -**
+Kubernetes [Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) for the chart. It is the namespace on which Sugarizer School Portal Server will be installed.
 
-**hostName:** The hostname from which Sugarizer School Portal Server will be accessible. Must be a valid domain/subdomain. Must be a valid hostname as defined in [RFC 1123](https://tools.ietf.org/html/rfc1123).
+**[hostName] -**
+The hostname from which Sugarizer School Portal Server will be accessible. Must be a valid domain/subdomain. Must be a valid hostname as defined in [RFC 1123](https://tools.ietf.org/html/rfc1123). The hostname should point towards the External IP of the NGINX Ingress controller.
 
-**host:** The host on which new Sugarizer-Server deployments will be available as subdomain. The Sugarizer-Server deployments will be available on `<schoolShortName>.host`. For example if schoolShortName is `test` and host is `sugarizer.tools` then the deployment will be available on `test.sugarizer.tools`.
+**[deployment]**
+- **host:** The host on which new Sugarizer-Server deployments will be available as subdomain. The Sugarizer-Server deployments will be available on `<schoolShortName>.host`. For example if schoolShortName is `test` and host is `sugarizer.tools` then the deployment will be available on `test.sugarizer.tools`.
 
-**databaseUrl:** The URL of the MongoDB database. If replicaset is used, it can be the name of your replicaset like `mymongodb` which maps to `mymongodb-mongodb-replicaset-0.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017,mymongodb-mongodb-replicaset-1.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017,mymongodb-mongodb-replicaset-2.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017` in the .ini file or if a single database without replicaset is used, then it can be like `sugarizer-service-db-mymongodb.sugarizer-mymongodb.svc.cluster.local`.
+- **https:** Boolean. Set it to `true` to enable HTTPS support.
 
-**replicaset:** Boolean. Defines if databaseUrl is the URL of a replicaset or a single database. Set it to `true` if MongoDB replicaset chart is used. `false` if database is used without replicasets.
+**[database]**
+- **databaseUrl:** The URL of the MongoDB database. If replicaset is used, it can be the name of your replicaset like `mymongodb` which maps to `mymongodb-mongodb-replicaset-0.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017,mymongodb-mongodb-replicaset-1.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017,mymongodb-mongodb-replicaset-2.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017` in the .ini file or if a single database without replicaset is used, then it can be like `sugarizer-service-db-mymongodb.sugarizer-mymongodb.svc.cluster.local`.
 
-**gcpProjectId:** The Project ID of the project on Google Cloud Platform.
+- **replicaset:** Boolean. Defines if databaseUrl is the URL of a replicaset or a single database. Set it to `true` if MongoDB replicaset chart is used. `false` if database is used without replicasets.
 
-**gcpServiceAccount:** Your service account key in base64 format.
+**[cluster]**: Not required if HTTPS is `false`. 
+- **provider:** The provider on which cluster is hosted on. Options: `gke`, `azure`.
 
-**slackWebhookUrl:** (Optional) The [slackWebhookUrl](https://api.slack.com/messaging/webhooks) of your slack channel to connect the server with the webhook. You can follow [these](https://api.slack.com/messaging/webhooks#getting_started) instructions to create a webhook. Set `slackWebhookUrl` to `false` if you do not want your app to connect with Slack. If the app is connected with slack, it'll send notifications to the channel if a deployment is created or destroyed.
+*If the provider is `gke`:*
+- **gcpProjectId:** The Project ID of the project on Google Cloud Platform.
+- **gcpServiceAccount:** Your GCP Service Account key in base64 format.
+
+*If the provider is `azure`:*
+- **azureClientSecret:** Your Azure Service Principal Password in plain text format.
+- **azureSPAppId:** Your Azure Service Principal App ID.
+- **azureSubscriptionId:** The Subscription ID of your Azure Cloud Platform Account.
+- **azureTenantId:** The Tenant ID for your Azure Service Principal.
+- **azureDnsZoneResourceGroup:** The Resource Group that you have your DNZ Zone in.
+- **azureDnsZone:** The name of your Azure DNS Zone.
+
+**[webhook]**: Optional.
+- **slackWebhookUrl:** The [slackWebhookUrl](https://api.slack.com/messaging/webhooks) of your slack channel to connect the server with the webhook. You can follow [these](https://api.slack.com/messaging/webhooks#getting_started) instructions to create a webhook. Set `slackWebhookUrl` to `false` if you do not want your app to connect with Slack. If the app is connected with slack, it'll send notifications to the channel if a deployment is created or destroyed.
 
 ### Install Chart Using Helm
 Navigate into the chart directory and run:
