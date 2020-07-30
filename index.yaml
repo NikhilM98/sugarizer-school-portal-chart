@@ -3,13 +3,24 @@ entries:
   school-portal-chart:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2020-07-10T22:53:16.074053289+05:30"
+    created: "2020-07-30T17:02:32.185293261+05:30"
+    description: A Sugarizer School Portal Helm chart for Kubernetes
+    digest: 3fac3a4ea677a816d52e20c733d6bca06994f37ebb2746c0127b04b4eeb453b4
+    icon: https://raw.githubusercontent.com/llaske/sugarizer/master/icons/sugarizer.svg
+    name: school-portal-chart
+    type: application
+    urls:
+    - packages/school-portal-chart-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2020-07-30T17:02:32.184475838+05:30"
     description: A Sugarizer School Portal Helm chart for Kubernetes
     digest: 787040379d3dc3775de670a3685f66265817dbb4fddca90d98cc39a7215b1ce7
     icon: https://raw.githubusercontent.com/llaske/sugarizer/master/icons/sugarizer.svg
     name: school-portal-chart
     type: application
     urls:
-    - https://nikhilm98.github.io/sugarizer-school-portal-chart/packages/school-portal-chart-0.1.0.tgz
+    - packages/school-portal-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2020-07-10T22:53:16.073050229+05:30"
+generated: "2020-07-30T17:02:32.180580167+05:30"
