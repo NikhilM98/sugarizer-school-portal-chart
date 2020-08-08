@@ -18,5 +18,13 @@ cluster: # Not required if HTTPS is false.
     azureTenantId: azureTenantId
     azureDnsZoneResourceGroup: azureDnsZoneResourceGroup
     azureDnsZone: azure.sugarizer.tools
+verification:
+    enabled: false
+    smtpPort: smtp_port
+    smtpHost: smtp_host
+    smtpTlsSsecure: smtp_tls_secure
+    smtpUser: smtp_user
+    smtpPass: smtp_pass
+    smtpEmail: smtp_email
 webhook:
     slackWebhookUrl: null
