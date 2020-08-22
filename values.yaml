@@ -1,13 +1,13 @@
-sspNamespace: schoolportalx
-hostName: azurex.sugarizer.tools
+sspNamespace: schoolportal
+hostName: amazon.sugarizer.tools
 deployment:
-    host: azure.sugarizer.tools
+    host: amazon.sugarizer.tools
     https: true
 database:
     databaseUrl: mymongodb
     replicaset: true
 cluster: # Not required if HTTPS is false.
-    provider: gke # Options: gke, azure
+    provider: aws # Options: gke, azure, aws
     # If provider is gke
     gcpProjectId: gcpProjectId
     gcpServiceAccount: gcpServiceAccount
@@ -18,6 +18,12 @@ cluster: # Not required if HTTPS is false.
     azureTenantId: azureTenantId
     azureDnsZoneResourceGroup: azureDnsZoneResourceGroup
     azureDnsZone: azure.sugarizer.tools
+    # If provider is aws
+    awsClientSecret: awsClientSecret
+    awsRegion: awsRegion
+    awsAccessKeyId: awsAccessKeyId
+    awsRole: null
+    awsDnsZone: amazon.sugarizer.tools
 verification:
     enabled: false
     smtpPort: smtp_port
