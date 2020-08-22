@@ -4,3 +4,5 @@ deployment:
 database:
     databaseUrl: {{.Values.database.databaseUrl}}
     replicaset: {{.Values.database.replicaset}}
+cluster: # Not required if HTTPS is false. Required only if you plan to use Sugarizer Chart independent of Sugarizer School Portal
+    provider: none # Options: gke, azure, aws, microk8s
