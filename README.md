@@ -7,7 +7,7 @@
 You can deploy **Sugarizer School Portal Server** instance by editing the values of the Values YAML file and running simple `helm install` command. The Sugarizer School Portal Server instance can be accessed by the browser by opening the hostName URL.
 
 ## Provider Support
-Sugarizer School Portal Chart supports two providers:
+Sugarizer School Portal Chart supports three providers:
 - [Amazon Elastic Kubernetes Service](https://aws.amazon.com/eks/) (Amazon EKS)
 - [Azure Kubernetes Service](https://azure.microsoft.com/en-in/services/kubernetes-service/) (AKS)
 - [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine) (GKE)
@@ -166,12 +166,21 @@ The hostname from which Sugarizer School Portal Server will be accessible. Must 
 - **azureDnsZoneResourceGroup:** The Resource Group that you have your DNZ Zone in.
 - **azureDnsZone:** The name of your Azure DNS Zone.
 
-*If the procider is `aws`:*
+*If the provider is `aws`:*
 - **awsClientSecret:**  Your AWS Secret Access Key in plain text format.
 - **awsRegion:**  The region on which your DNS Zone is hosted on.
 - **awsAccessKeyId:** Your AWS Access Key ID.
 - **awsDnsZone:** The name of your AWS DNS Zone.
 - **awsRole:** (Optional Dependency) The Role attached to your account.
+
+**[verification]**: Optional. Whether Client Email Validation through SMTP will be enabled or not.
+- **enabled:** Boolean. Defines if verification will be enabled or not.
+- **smtpPort:** The port number of SMTP Server.
+- **smtpHost:** The host URL of SMTP Server.
+- **smtpTlsSsecure:** Boolean. Is SMTP TLS Secure or not.
+- **smtpUser:** The username of your SMTP server.
+- **smtpPass:** The password of your SMTP server.
+- **smtpEmail:** The email address that will be used to send emails.
 
 **[webhook]**: Optional.
 - **slackWebhookUrl:** The [slackWebhookUrl](https://api.slack.com/messaging/webhooks) of your slack channel to connect the server with the webhook. You can follow [these](https://api.slack.com/messaging/webhooks#getting_started) instructions to create a webhook. Set `slackWebhookUrl` to `false` if you do not want your app to connect with Slack. If the app is connected with slack, it'll send notifications to the channel if a deployment is created or destroyed.
