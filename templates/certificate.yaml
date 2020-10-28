@@ -23,8 +23,11 @@ metadata:
   namespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
 spec:
   acme:
-    # server: https://acme-v02.api.letsencrypt.org/directory
+    {{- if eq .Values.deployment.production true }}
+    server: https://acme-v02.api.letsencrypt.org/directory
+    {{- else }}
     server: https://acme-staging-v02.api.letsencrypt.org/directory
+    {{- end }}
     privateKeySecretRef:
       name: ssp-acme-pk-{{required "sspNamespace not defined" .Values.sspNamespace}}
     solvers:
