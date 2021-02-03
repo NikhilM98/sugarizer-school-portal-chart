@@ -1,7 +1,9 @@
 # Sugarizer School Portal Chart
 [Helm](https://helm.sh/) Chart for setting up [Sugarizer School Portal Server](https://github.com/nikhilm98/sugarizer-school-portal-server) deployment on a [Kubernetes](https://kubernetes.io/) cluster.
 
-[Sugarizer School Portal](https://github.com/nikhilm98/sugarizer-school-portal) is a Kubernetes cluster that is able to create/manage on-demand new Sugarizer Server instances.
+[Sugarizer School Portal](https://github.com/nikhilm98/sugarizer-school-portal) is a Kubernetes cluster that is able to create/manage on-demand new Sugarizer Server instances. The following schema sum up the Sugarizer School Portal architecture.
+
+![](images/ssp-architecture.svg)
 
 ## Usage
 You can deploy **Sugarizer School Portal Server** instance by editing the values of the Values YAML file and running simple `helm install` command. The Sugarizer School Portal Server instance can be accessed by the browser by opening the hostName URL.
@@ -119,7 +121,7 @@ helm install cert-manager jetstack/cert-manager --namespace cert-manager --versi
 You need to create a Service Principal for Azure. You can follow these [instructions](https://cert-manager.io/docs/configuration/acme/dns01/azuredns/) to create a Service Principal for Azure.
 
 **EKS:**
-You need to use Amazon Route53 as Cloud DNS to allow certificate verification. You can follow these [instructions](https://cert-manager.io/docs/configuration/acme/dns01/route53/) to configure Route53 for AWS. 
+You need to use Amazon Route53 as Cloud DNS to allow certificate verification. You can follow these [instructions](https://cert-manager.io/docs/configuration/acme/dns01/route53/) to configure Route53 for AWS.
 
 - **GKE:**
 You can create a Service Account for GCP by following these [instructions](https://cert-manager.io/docs/configuration/acme/dns01/google/).
@@ -146,14 +148,14 @@ The hostname from which Sugarizer School Portal Server will be accessible. Must 
 
 - **https:** Boolean. Set it to `true` to enable HTTPS support.
 
-- **production:** Boolean. Use to switch between letsencrypt Staging and Production server. Set it to `true` to switch to Production server. 
+- **production:** Boolean. Use to switch between letsencrypt Staging and Production server. Set it to `true` to switch to Production server.
 
 **[database]**
 - **databaseUrl:** The URL of the MongoDB database. If replicaset is used, it can be the name of your replicaset like `mymongodb` which maps to `mymongodb-mongodb-replicaset-0.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017,mymongodb-mongodb-replicaset-1.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017,mymongodb-mongodb-replicaset-2.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017` in the .ini file or if a single database without replicaset is used, then it can be like `sugarizer-service-db-mymongodb.sugarizer-mymongodb.svc.cluster.local`.
 
 - **replicaset:** Boolean. Defines if databaseUrl is the URL of a replicaset or a single database. Set it to `true` if MongoDB replicaset chart is used. `false` if database is used without replicasets.
 
-**[cluster]**: Not required if HTTPS is `false`. 
+**[cluster]**: Not required if HTTPS is `false`.
 - **provider:** The provider on which cluster is hosted on. Options: `gke`, `azure`, `aws`.
 
 *If the provider is `gke`:*
