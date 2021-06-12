@@ -1,7 +1,7 @@
+sspserverName: {{.Values.sspserverName}}
 deployment:
     sspNamespace: {{.Values.sspNamespace}}
     https: {{.Values.deployment.https}}
-    sspserverName: {{.Values.sspserverName}}
 database:
     databaseUrl: {{.Values.database.databaseUrl}}
     replicaset: {{.Values.database.replicaset}}
