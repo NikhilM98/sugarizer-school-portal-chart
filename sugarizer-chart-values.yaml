@@ -1,4 +1,4 @@
-sspserverName: {{.Values.sspserverName}}
+sspServerName: {{.Values.sspServerName}}
 deployment:
     sspNamespace: {{.Values.sspNamespace}}
     https: {{.Values.deployment.https}}
