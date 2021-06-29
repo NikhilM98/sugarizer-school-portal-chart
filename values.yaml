@@ -1,5 +1,6 @@
 sspNamespace: schoolportal
 hostName: amazon.sugarizer.tools
+sspServerName: Sugarizer School Portal
 deployment:
     host: amazon.sugarizer.tools
     https: true
