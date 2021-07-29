@@ -32,11 +32,11 @@ You can install MongoDB-Replicaset using [MongoDB-Replicaset](https://github.com
 MongoDB-Replicaset can be installed by following these commands:
 ```bash
 # Add Chart Repository
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
 # Install the chart with the release name mymongodb (You can change the release name)
-helm install mymongodb stable/mongodb-replicaset
+helm install ssp-mongodb bitnami/mongodb
 ```
 
 ### Install Kubernetes-Reflector
