@@ -42,3 +42,4 @@ security:
     maxAge: 172800000
     maxAgeTfa: 180000
     serviceName: SchoolPortal
+    secret: super.sugarizer.schoolportal.key
