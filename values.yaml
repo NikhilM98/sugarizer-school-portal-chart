@@ -36,3 +36,9 @@ verification:
     smtpEmail: smtp_email
 webhook:
     slackWebhookUrl: null
+security:
+    minPassSize: 4
+    minTokenSize: 6
+    maxAge: 172800000
+    maxAgeTfa: 180000
+    serviceName: SchoolPortal
