@@ -189,6 +189,13 @@ The hostname from which Sugarizer School Portal Server will be accessible. Must 
 **[webhook]**: Optional.
 - **slackWebhookUrl:** The [slackWebhookUrl](https://api.slack.com/messaging/webhooks) of your slack channel to connect the server with the webhook. You can follow [these](https://api.slack.com/messaging/webhooks#getting_started) instructions to create a webhook. Set `slackWebhookUrl` to `false` if you do not want your app to connect with Slack. If the app is connected with slack, it'll send notifications to the channel if a deployment is created or destroyed.
 
+**[security]**: The security parameters of your deployment. Recommended default values are provided. You can change some of them if you want to.
+- **minPassSize:** The minimum integer value of the characters for the password.
+- **maxAge:** The maxAge is the expiration time in milliseconds of a session with the client. At the expiration of the session, the client should reenter its password. The default time is 172800000 (48 hours).
+- **maxAgeTfa:** The maxAgeTfa is the expiration time in milliseconds of a session with the client. At the expiration of the session, the client should reenter its password. The default time is 180000 (30 mins).
+- **serviceName:** The display name you wish to be displayed on authenticator app screen. The default value is School Portal, but it can be anything.
+- **secret:** The JWT Secret which is used to encrypt JWT Token. It should be replaced with a unique to keep the SSP Server secure.
+
 ### Install Chart Using Helm
 Navigate into the chart directory and run:
 ```bash
