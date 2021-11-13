@@ -28,7 +28,7 @@ Simply navigate into the scripts directory and run `sh setup.sh` to set up your 
 If you don't have a cluster environment set-up, you can follow these steps to set-up a working environment.
 
 ### Install MongoDB-Replicaset
-You can install MongoDB-Replicaset using [MongoDB-Replicaset](https://github.com/helm/charts/tree/master/stable/mongodb-replicaset) Helm Chart.
+You can install MongoDB-Replicaset using [MongoDB-Replicaset](https://github.com/NikhilM98/sugarizer-school-portal-chart.git) MongoDB® Helm Chart packaged by Bitnami.
 MongoDB-Replicaset can be installed by following these commands:
 ```bash
 # Add Chart Repository
