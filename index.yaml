@@ -3,7 +3,18 @@ entries:
   school-portal-chart:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2020-10-28T13:19:01.753477643+05:30"
+    created: "2021-11-15T00:37:23.871505+09:00"
+    description: A Sugarizer School Portal Helm chart for Kubernetes
+    digest: 2d3eb79364da16c1de082f48a8c5015cfa595e41d37a23549d11cedbcdfb2728
+    icon: https://raw.githubusercontent.com/llaske/sugarizer/master/icons/sugarizer.svg
+    name: school-portal-chart
+    type: application
+    urls:
+    - packages/school-portal-chart-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-11-15T00:37:23.861806+09:00"
     description: A Sugarizer School Portal Helm chart for Kubernetes
     digest: 8e00f8cd22cfc39004417f3365a83dfaf72ccbbe5167a0fbb60d1e531921030c
     icon: https://raw.githubusercontent.com/llaske/sugarizer/master/icons/sugarizer.svg
@@ -14,7 +25,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2020-10-28T13:19:01.75158749+05:30"
+    created: "2021-11-15T00:37:23.858995+09:00"
     description: A Sugarizer School Portal Helm chart for Kubernetes
     digest: a51788546872a11df8c9990042c4eac5470f863a57684a6ffdfaf0004e84534f
     icon: https://raw.githubusercontent.com/llaske/sugarizer/master/icons/sugarizer.svg
@@ -25,7 +36,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2020-10-28T13:19:01.749950292+05:30"
+    created: "2021-11-15T00:37:23.85712+09:00"
     description: A Sugarizer School Portal Helm chart for Kubernetes
     digest: 3fac3a4ea677a816d52e20c733d6bca06994f37ebb2746c0127b04b4eeb453b4
     icon: https://raw.githubusercontent.com/llaske/sugarizer/master/icons/sugarizer.svg
@@ -36,7 +47,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2020-10-28T13:19:01.748205643+05:30"
+    created: "2021-11-15T00:37:23.855685+09:00"
     description: A Sugarizer School Portal Helm chart for Kubernetes
     digest: 787040379d3dc3775de670a3685f66265817dbb4fddca90d98cc39a7215b1ce7
     icon: https://raw.githubusercontent.com/llaske/sugarizer/master/icons/sugarizer.svg
@@ -45,4 +56,4 @@ entries:
     urls:
     - packages/school-portal-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2020-10-28T13:19:01.747202067+05:30"
+generated: "2021-11-15T00:37:23.853609+09:00"
