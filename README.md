@@ -27,9 +27,9 @@ Simply navigate into the scripts directory and run `sh setup.sh` to set up your 
 ## Environment Setup (Manual Setup)
 If you don't have a cluster environment set-up, you can follow these steps to set-up a working environment.
 
-### Install MongoDB-Replicaset
-You can install MongoDB-Replicaset using [MongoDB-Replicaset](https://github.com/helm/charts/tree/master/stable/mongodb-replicaset) Helm Chart.
-MongoDB-Replicaset can be installed by following these commands:
+### Install MongoDB Replicaset
+You can install MongoDB Replicaset using [MongoDB Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/mongodb) packaged by Bitnami.
+The chart can be installed by following these commands:
 ```bash
 # Add Chart Repository
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -188,6 +188,13 @@ The hostname from which Sugarizer School Portal Server will be accessible. Must 
 
 **[webhook]**: Optional.
 - **slackWebhookUrl:** The [slackWebhookUrl](https://api.slack.com/messaging/webhooks) of your slack channel to connect the server with the webhook. You can follow [these](https://api.slack.com/messaging/webhooks#getting_started) instructions to create a webhook. Set `slackWebhookUrl` to `false` if you do not want your app to connect with Slack. If the app is connected with slack, it'll send notifications to the channel if a deployment is created or destroyed.
+
+**[security]**: The security parameters of your deployment. Recommended default values are provided. You can change some of them if you want to.
+- **minPassSize:** The integer value for the minimum number of characters of the password.
+- **maxAge:** The maxAge is the expiration time in milliseconds of a session with the client. At the expiration of the session, the client should reenter its password. The default time is 172800000 (48 hours).
+- **maxAgeTfa:** The maxAgeTfa is the expiration time in milliseconds of a session with the client. At the expiration of the session, the client should reenter its password. The default time is 180000 (30 mins).
+- **serviceName:** The issuer parameter is a string value indicating the provider or service this account is associated with, URL-encoded according to [RFC 3986](http://tools.ietf.org/html/rfc3986).
+- **secret:** The JWT Secret which is used to encrypt JSON Web Token. It should be replaced with a unique value to keep the SSP Server secure.
 
 ### Install Chart Using Helm
 Navigate into the chart directory and run:
