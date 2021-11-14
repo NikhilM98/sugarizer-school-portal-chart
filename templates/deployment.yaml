@@ -18,7 +18,7 @@ spec:
       serviceAccountName: ssp-service-account-{{required "sspNamespace not defined" .Values.sspNamespace}}
       containers:
       - name: ssp-http
-        image: ricknjacky/sugarizer-school-portal
+        image: nikhilm98/sugarizer-school-portal:dev
         volumeMounts:
         - name: env
           mountPath: "/usr/src/sugarizer-school-portal-server/env/config.ini"
