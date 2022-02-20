@@ -110,7 +110,7 @@ helm repo update
 
 # Cert-Manager requires a number of CRD resources to be installed into your cluster as part of installation.
 # Install CRDs as part of the Helm release
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.15.1 --set installCRDs=true
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.7.1 --set installCRDs=true
 ```
 
 ### Create Service Account
