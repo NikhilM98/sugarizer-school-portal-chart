@@ -16,7 +16,7 @@ type: Opaque
 
 ---
 
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: ssp-letsencrypt-{{required "sspNamespace not defined" .Values.sspNamespace}}
@@ -33,14 +33,14 @@ spec:
     solvers:
     {{- if eq .Values.cluster.provider "gke" }}
     - dns01:
-        clouddns:
+        cloudDNS:
           project: {{required "gcpProjectId not defined" .Values.cluster.gcpProjectId}}
           serviceAccountSecretRef:
             name: clouddns-{{required "sspNamespace not defined" .Values.sspNamespace}}
             key: key.json
     {{- else if eq .Values.cluster.provider "azure" }}
     - dns01:
-        azuredns:
+        azureDNS:
           clientID: {{required "azureSPAppId not defined" .Values.cluster.azureSPAppId}}
           clientSecretSecretRef:
             name: clouddns-{{required "sspNamespace not defined" .Values.sspNamespace}}
@@ -68,13 +68,11 @@ spec:
 
 ---
 
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: ssp-cert-{{required "sspNamespace not defined" .Values.sspNamespace}}
   namespace: {{required "sspNamespace not defined" .Values.sspNamespace}}
-  annotations:
-    reflector.v1.k8s.emberstack.com/secret-reflection-allowed: "true"
 spec:
   dnsNames: 
     - '*.{{required "hostName not defined" .Values.hostName}}'
@@ -82,4 +80,7 @@ spec:
   secretName: https-secret-{{required "sspNamespace not defined" .Values.sspNamespace}}
   issuerRef:
     name: ssp-letsencrypt-{{required "sspNamespace not defined" .Values.sspNamespace}}
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
 {{- end }}

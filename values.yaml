@@ -38,7 +38,7 @@ webhook:
     slackWebhookUrl: null
 security:
     minPassSize: 4
-    maxAge: 172800000
-    maxAgeTfa: 180000
+    maxAge: '172800000'
+    maxAgeTfa: '180000'
     serviceName: SchoolPortal
     secret: super.sugarizer.schoolportal.key
