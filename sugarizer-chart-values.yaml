@@ -13,3 +13,6 @@ security:
     maxAgeTfa: {{.Values.security.maxAgeTfa}}
     serviceName: {{.Values.security.serviceName}}
     secret: {{.Values.security.secret}}
+privacy:
+    consentNeed: {{.Values.privacy.consentNeed}}
+    policy: {{.Values.privacy.policy}}
