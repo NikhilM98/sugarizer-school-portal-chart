@@ -19,6 +19,7 @@ spec:
       containers:
       - name: ssp-http
         image: nikhilm98/sugarizer-school-portal:dev
+        imagePullPolicy: Always
         volumeMounts:
         - name: env
           mountPath: "/usr/src/sugarizer-school-portal-server/env/config.ini"
