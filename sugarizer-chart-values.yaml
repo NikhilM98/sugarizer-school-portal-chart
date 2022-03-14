@@ -9,8 +9,8 @@ cluster: # Not required if HTTPS is false. Required only if you plan to use Suga
     provider: none # Options: gke, azure, aws, microk8s
 security:
     minPassSize: {{.Values.security.minPassSize}}
-    maxAge: {{.Values.security.maxAge}}
-    maxAgeTfa: {{.Values.security.maxAgeTfa}}
+    maxAge: {{.Values.security.maxAge | quote}}
+    maxAgeTfa: {{.Values.security.maxAgeTfa | quote}}
     serviceName: {{.Values.security.serviceName}}
     secret: {{.Values.security.secret}}
 privacy:
