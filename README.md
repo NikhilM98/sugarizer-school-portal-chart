@@ -35,7 +35,7 @@ The chart can be installed by following these commands:
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
-# Install the chart with the release name mymongodb (You can change the release name)
+# Install the chart with the release name ssp-mongodb (You can change the release name)
 helm install ssp-mongodb bitnami/mongodb
 ```
 
@@ -151,7 +151,7 @@ The hostname from which Sugarizer School Portal Server will be accessible. Must 
 - **production:** Boolean. Use to switch between letsencrypt Staging and Production server. Set it to `true` to switch to Production server.
 
 **[database]**
-- **databaseUrl:** The URL of the MongoDB database. If replicaset is used, it can be the name of your replicaset like `mymongodb` which maps to `mymongodb-mongodb-replicaset-0.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017,mymongodb-mongodb-replicaset-1.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017,mymongodb-mongodb-replicaset-2.mymongodb-mongodb-replicaset.default.svc.cluster.local:27017` in the .ini file or if a single database without replicaset is used, then it can be like `sugarizer-service-db-mymongodb.sugarizer-mymongodb.svc.cluster.local`.
+- **databaseUrl:** The URL of the MongoDB database. If replicaset is used, it can be the name of your replicaset like `ssp-mongodb` which maps to `ssp-mongodb-mongodb-replicaset-0.ssp-mongodb-mongodb-replicaset.default.svc.cluster.local:27017,ssp-mongodb-mongodb-replicaset-1.ssp-mongodb-mongodb-replicaset.default.svc.cluster.local:27017,ssp-mongodb-mongodb-replicaset-2.ssp-mongodb-mongodb-replicaset.default.svc.cluster.local:27017` in the .ini file or if a single database without replicaset is used, then it can be like `sugarizer-service-db-ssp-mongodb.sugarizer-ssp-mongodb.svc.cluster.local`.
 
 - **replicaset:** Boolean. Defines if databaseUrl is the URL of a replicaset or a single database. Set it to `true` if MongoDB replicaset chart is used. `false` if database is used without replicasets.
 
@@ -196,6 +196,9 @@ The hostname from which Sugarizer School Portal Server will be accessible. Must 
 - **serviceName:** The issuer parameter is a string value indicating the provider or service this account is associated with, URL-encoded according to [RFC 3986](http://tools.ietf.org/html/rfc3986).
 - **secret:** The JWT Secret which is used to encrypt JSON Web Token. It should be replaced with a unique value to keep the SSP Server secure.
 
+**[privacy]**: The privacy section describes the privacy settings.
+**consentNeed:** Can either be `true` or `false`. If the value is set to `true`, the Sugarizer client will ask for a consent to user before they will be allowed to do their first connection to the server. 
+**policy:** Policy is the URL that Sugarizer client shows in consent popup displayed to the user.
 ### Install Chart Using Helm
 Navigate into the chart directory and run:
 ```bash
